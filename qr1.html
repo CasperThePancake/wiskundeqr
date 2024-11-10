@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 1 - Wiskunde</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="question">
+        <h1 id="q"></h1>
+    </div>
+    <div id="response">
+        <div id="option1" class="option"><button id="rp1" onclick="clicked(0)"></button></div>
+        <div id="option2" class="option"><button id="rp2" onclick="clicked(1)"></button></div>
+        <div id="option3" class="option"><button id="rp3" onclick="clicked(2)"></button></div>
+        <div id="option4" class="option"><button id="rp4" onclick="clicked(3)"></button></div>
+    </div>
+<script>
+    questions = ["1+2","3+3","4+1","2+2","6-4","6-5","2+3","5-3","2+1","4-3","3-1","2+4","5-4","3-2"]
+    question = -1
+
+    function nextQuestion() {
+        if (question >= questions.length - 1) {
+            window.location.replace("klaar.html");
+            return
+        }
+        question++
+        document.getElementById("q").innerHTML = questions[question]+"="
+        // Generate responses
+        responses = []
+        numbers = [0,1,2,3,4,5,6]
+        numbers.splice(numbers.indexOf(eval(questions[question])), 1)
+
+        console.log(numbers)
+        
+        random = Math.floor(Math.random() * 6)
+        responses.push(numbers[random])
+        numbers.splice(random,1)
+
+        console.log(numbers)
+
+        random = Math.floor(Math.random() * 4)
+        responses.push(numbers[random])
+        numbers.splice(random,1)
+
+        console.log(numbers)
+
+        random = Math.floor(Math.random() * 3)
+        responses.push(numbers[random])
+        numbers.splice(random,1)
+
+        console.log(numbers)
+
+        random = Math.floor(Math.random() * 2)
+        responses.push(numbers[random])
+        numbers.splice(random,1)
+
+        console.log(numbers)
+
+        responses[Math.floor(Math.random() * 3)] = eval(questions[question])
+
+        // Show as HTML
+        document.getElementById("rp1").innerHTML = responses[0]
+        document.getElementById("rp2").innerHTML = responses[1]
+        document.getElementById("rp3").innerHTML = responses[2]
+        document.getElementById("rp4").innerHTML = responses[3]
+        document.getElementById("rp1").style.backgroundColor = "lightgray"
+        document.getElementById("rp2").style.backgroundColor = "lightgray"
+        document.getElementById("rp3").style.backgroundColor = "lightgray"
+        document.getElementById("rp4").style.backgroundColor = "lightgray"
+        document.getElementById("question").style.backgroundColor = "white"
+    }
+
+    function clicked(id) {
+        console.log(id)
+        if (responses[id] == eval(questions[question])) {
+            //Correct
+            document.getElementById("rp"+(id+1)).style.backgroundColor = "chartreuse"
+            document.getElementById("question").style.backgroundColor = "chartreuse"
+            setTimeout(()=> {
+            nextQuestion()
+            }
+            ,2000);
+        } else {
+            //Wrong
+            document.getElementById("rp"+(id+1)).style.backgroundColor = "red"
+        }
+    }
+
+    nextQuestion()
+</script>
+</body>
+</html>

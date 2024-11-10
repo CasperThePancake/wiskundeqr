@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 3 - Wiskunde</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="question">
+        <div id="top">
+            <h1 id="t1"></h1>
+        </div>
+        <div id="bottom">
+            <div id="split1"><h1 id="t2"></h1></div>
+            <div id="split2"><h1><br></h1></div>
+        </div>
+    </div>
+    <div id="response">
+        <div id="option1" class="option"><button id="rp1" onclick="clicked(0)"></button></div>
+        <div id="option2" class="option"><button id="rp2" onclick="clicked(1)"></button></div>
+        <div id="option3" class="option"><button id="rp3" onclick="clicked(2)"></button></div>
+        <div id="option4" class="option"><button id="rp4" onclick="clicked(3)"></button></div>
+    </div>
+    <svg id="lineSvg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        <line id="connector" x1="0" y1="0" x2="0" y2="0" stroke="black" stroke-width="2"/>
+    </svg>
+    <svg id="lineSvg2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+        <line id="connector2" x1="0" y1="0" x2="0" y2="0" stroke="black" stroke-width="2"/>
+    </svg>
+<script>
+    var questions = [];
+    for (let a = 1; a <= 6; a++) {
+        for (let b = 0; b <= a; b++) {
+            questions.push([a, b]);
+        }
+    }
+
+    function nextQuestion() {
+        if (questions.length == 0) {
+            window.location.replace("klaar.html");
+            return
+        }
+
+        random = Math.floor(Math.random() * questions.length)
+        console.log(questions[random][1])
+        document.getElementById("t1").innerHTML = questions[random][0]
+        document.getElementById("t2").innerHTML = questions[random][1]
+
+        // Fake responses
+        responses = []
+        numbers = [0,1,2,3,4,5,6]
+        console.log(questions[random][0]-questions[random][1])
+        numbers.splice(numbers.indexOf(questions[random][0]-questions[random][1]), 1)
+        
+        randy = Math.floor(Math.random() * 6)
+        responses.push(numbers[randy])
+        numbers.splice(randy,1)
+
+        randy = Math.floor(Math.random() * 4)
+        responses.push(numbers[randy])
+        numbers.splice(randy,1)
+
+        randy = Math.floor(Math.random() * 3)
+        responses.push(numbers[randy])
+        numbers.splice(randy,1)
+
+        randy = Math.floor(Math.random() * 2)
+        responses.push(numbers[randy])
+        numbers.splice(randy,1)
+
+        responses[Math.floor(Math.random() * 3)] = questions[random][0]-questions[random][1]
+
+        // Show as HTML
+        document.getElementById("rp1").innerHTML = responses[0]
+        document.getElementById("rp2").innerHTML = responses[1]
+        document.getElementById("rp3").innerHTML = responses[2]
+        document.getElementById("rp4").innerHTML = responses[3]
+        document.getElementById("rp1").style.backgroundColor = "lightgray"
+        document.getElementById("rp2").style.backgroundColor = "lightgray"
+        document.getElementById("rp3").style.backgroundColor = "lightgray"
+        document.getElementById("rp4").style.backgroundColor = "lightgray"
+        document.getElementById("question").style.backgroundColor = "white"
+    }
+
+    function clicked(id) {
+        console.log(id)
+        if (responses[id] == questions[random][0]-questions[random][1]) {
+            //Correct
+            document.getElementById("rp"+(id+1)).style.backgroundColor = "chartreuse"
+            document.getElementById("question").style.backgroundColor = "chartreuse"
+            setTimeout(()=> {
+                questions.splice(random,1)    
+                nextQuestion()
+            }
+            ,2000);
+        } else {
+            //Wrong
+            document.getElementById("rp"+(id+1)).style.backgroundColor = "red"
+        }
+    }
+
+    nextQuestion()
+
+    function drawLine() {
+    const div1 = document.getElementById('top');
+    const div2 = document.getElementById('split1');
+    const connector = document.getElementById('connector');
+
+    const rect1 = div1.getBoundingClientRect();
+    const rect2 = div2.getBoundingClientRect();
+
+    // Calculate center points of each div
+    const x1 = rect1.left + rect1.width / 2;
+    const y1 = rect1.top + rect1.height / 2;
+    const x2 = rect2.left + rect2.width / 2;
+    const y2 = rect2.top + rect2.height / 2;
+
+    // Set line attributes to connect the two points
+    connector.setAttribute('x1', x1);
+    connector.setAttribute('y1', y1);
+    connector.setAttribute('x2', x2);
+    connector.setAttribute('y2', y2);
+}
+
+function drawLine2() {
+    const div1 = document.getElementById('top');
+    const div2 = document.getElementById('split2');
+    const connector = document.getElementById('connector2');
+
+    const rect1 = div1.getBoundingClientRect();
+    const rect2 = div2.getBoundingClientRect();
+
+    // Calculate center points of each div
+    const x1 = rect1.left + rect1.width / 2;
+    const y1 = rect1.top + rect1.height / 2;
+    const x2 = rect2.left + rect2.width / 2;
+    const y2 = rect2.top + rect2.height / 2;
+
+    // Set line attributes to connect the two points
+    connector.setAttribute('x1', x1);
+    connector.setAttribute('y1', y1);
+    connector.setAttribute('x2', x2);
+    connector.setAttribute('y2', y2);
+}
+
+// Call the function to draw the line when the page loads
+window.addEventListener('load', drawLine);
+window.addEventListener('resize', drawLine); // Redraw line if window is resized
+window.addEventListener('load', drawLine2);
+window.addEventListener('resize', drawLine2); // Redraw line if window is resized
+</script>
+</body>
+</html>

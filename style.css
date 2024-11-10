@@ -1,0 +1,91 @@
+body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:0;
+    overflow:hidden;
+}
+
+h1 {
+    text-align: center;
+    font-size:100px;
+}
+
+#question {
+    width: 100vw;
+    height:75vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    transition: background-color 0.3s;
+}
+
+#response {
+    width:100vw;
+    height:25vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    z-index:11;
+}
+
+.option > button {
+    width:25vw;
+    height:25vh;
+}
+
+button {
+    background-color:lightgray;
+    border:1px black groove;
+    font-size: 100px;
+    transition: background-color 0.1s;
+    z-index:12;
+    position:relative;
+}
+
+button:active {
+    background-color: gray;
+}
+
+#done {
+    width:100vw;
+    height:100vh;
+    background-color:chartreuse;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#top {
+    width:100vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border:3px black groove;
+    width:20vw;
+    background-color: white;
+    z-index: 11;
+}
+
+#bottom {
+    width:100vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#split1, #split2 {
+    width:20vw;
+    border:3px black groove;
+    margin:5px 15px;
+    background-color: white;
+    z-index: 11;
+}
+
+#connector {
+    z-index: 0;
+}
+
+svg {
+    z-index:0;
+}
